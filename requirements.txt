@@ -42,7 +42,6 @@ pandas==2.1.0
 Pillow==9.5.0
 protobuf==4.24.3
 pyarrow==13.0.0
-PyAudio==0.2.13
 pydantic==2.3.0
 pydantic_core==2.6.3
 pydeck==0.8.0

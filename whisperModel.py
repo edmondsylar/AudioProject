@@ -15,16 +15,7 @@ def process_audio(audio_file_location):
 def ai_support(prompt):
     response = replicate.run(
         "replicate/llama70b-v2-chat:2c1608e18606fad2812020dc541930f2d0495ce32eee50074220b87300bc16e1",
-        {
-            "input": {
-                "prompt": prompt,
-                "temperature": 0.75,
-                "top_p": 1,
-                "max_length": 1000,
-                "repetition_penalty": 1
-            }
-        }
+        input={"prompt": prompt}
     )
-
-    completion = response.join('')
-    return completion
+    data = ''.join(list(response))
+    return response

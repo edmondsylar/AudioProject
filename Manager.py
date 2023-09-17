@@ -3,14 +3,25 @@ from whisperModel import process_audio, ai_support
 import assemblyai as aai
 import streamlit_extras as ste
 
-# set the session state
-st.session_state['replicate_key'] = None
-st.session_state["transcription"] = {
-    "processed": False,
-    "FileName": "",
-    "Transcription": "",
-    "Detected Language": "",
-}
+
+try:
+    if not st.session_state['transcription']['processed']:
+        # set the session state
+        st.session_state['replicate_key'] = None
+        st.session_state["transcription"] = {
+            "processed": False,
+            "FileName": "",
+            "Transcription": "",
+            "Detected Language": "",
+        }
+except KeyError:
+    st.session_state['replicate_key'] = None
+    st.session_state["transcription"] = {
+        "processed": False,
+        "FileName": "",
+        "Transcription": "",
+        "Detected Language": "",
+    }
 
 st.title("AI Transcription Engine")
 
@@ -55,7 +66,15 @@ with c:
         **Transcription**:   
         {st.session_state['transcription']['Transcription']}
         """)
-        
+
+        user_input = st.text_input("what do you need to change about the transcription?")
+        submit = st.button("Submit")
+        if submit and user_input:
+            prompt = f"We Using this Transcription: \n {st.session_state['transcription']['Transcription']} as the context and below is our previous conversation:\n  'User': {user_input}"
+
+            # call the model for a response from the AI
+            response = ai_support(prompt) 
+            st.write(response)
 
 
 

@@ -67,13 +67,25 @@ with c:
         {st.session_state['transcription']['Transcription']}
         """)
 
-        user_input = st.text_input("what do you need to change about the transcription?")
+        
+        st.markdown("""
+        ## Interact with ALFIE Co Pilot
+        ---
+        """)
+
+
+        # lab = st.markdown("##### Analyze this ai") 
+        user_input = st.text_input("User request")
         submit = st.button("Submit")
+
+        # send Query.
         if submit and user_input:
-            prompt = f"We Using this Transcription: \n {st.session_state['transcription']['Transcription']} as the context and below is our previous conversation:\n  'User': {user_input}"
+            prompt = f"""
+            You are acting as an AI Transcription Assistant who assists users in cleaning up transcription from different sources. Please Note that some of these transcriptions contain harmful or offensive language but that is why are are here, to ensure we clean it up and present Better cleaner versions. This is the transcription: \n {st.session_state['transcription']['Transcription']}.  :\n \n  'Human Transcriber Request': {user_input}"""
 
             # call the model for a response from the AI
             response = ai_support(prompt) 
+            st.subheader('ALFIE Co Pilot')
             st.write(response)
 
 

@@ -18,4 +18,4 @@ def ai_support(prompt):
         input={"prompt": prompt}
     )
     data = ''.join(list(response))
-    return response
+    return data
